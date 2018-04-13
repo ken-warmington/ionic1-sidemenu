@@ -1,5 +1,9 @@
 <ion-view view-title="Browse">
-  <ion-content>
+  <ion-content ng-controller="UploadController">
     <h1>Browse</h1>
+    <input class="bottom-marg-15" type="file" name="file" file="file">
+  	<button class="button button-small button-full button-positive" ng-disabled="file.size&amp&ampfalse || uploadProgress&gt0" ng-click="upload()" ng-cloak="">Upload</button>
+  	<img class="fit" ng-if="uploadUri" ng-src="{{uploadUri}}">
+  	<a ng-href="{{uploadUri}}" ng-bind="uploadUri"></a>
   </ion-content>
 </ion-view>
