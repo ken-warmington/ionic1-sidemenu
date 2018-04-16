@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['ngResource'])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
@@ -52,11 +52,48 @@ angular.module('starter.controllers', [])
   ];
 })
 
+/**
 .controller('ProductlistsCtrl', function($scope) {
   $scope.productlists = [
     { title: 'Product 1', id: 1 },
     { title: 'Product 2', id: 2 }
   ];
+})
+**/
+.controller('ProductlistsCtrl', function($scope , $resource) {
+	var theUrl='https://dev.loopspot.com/mymarkit-restapi/product/list';
+	//var theUrl='http://localhost:8080/mymarkit-restapi/product/list';
+	console.log('ProductlistsCtrl before REST call, theUrl='+theUrl);
+	
+	$scope.productlists= '[]';
+	$scope.searchResultsJson = '';
+	
+	var productsResourceQuery=$resource(theUrl, {}, {
+        query: {
+            method: 'GET',
+            params: {},
+            isArray: false
+        }
+    });
+
+	//execute query and log response
+	productsResourceQuery.query(function(productListResponse){ //function for success
+		console.log('ProductlistsCtrl after search --> success productListResponse='+productListResponse);
+		$scope.searchResultsJson = productListResponse;  //full JSON response
+		$scope.addresses=productListResponse; //array in JSON response
+		$scope.showSearchResults=true;
+		$scope.showJson=false;
+	}, function(err){ //function for errors - address not found
+		console.log('ProductlistsCtrl after search --> error err='+err);
+		$scope.searchResultsJson = '{ "error": "No data found matching the input" }';
+		$scope.showSearchResults=false;
+		$scope.showJson=true;
+	});
+	
+	
+	
+	// $scope.productlists = productsListResponse.productSummaryList; //used by productlists.html
+	
 })
 
 

@@ -1,5 +1,7 @@
 <ion-view view-title="Productlists">
   <ion-content>
+    <p> Search Results : {{searchResultsJson}} </p>
+  
     <ion-list>
       <ion-item ng-repeat="product in productlists" href="#/app/playlists/{{playlist.id}}">
         {{product.title}}
