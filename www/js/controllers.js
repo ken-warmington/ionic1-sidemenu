@@ -52,6 +52,14 @@ angular.module('starter.controllers', [])
   ];
 })
 
+.controller('ProductlistsCtrl', function($scope) {
+  $scope.productlists = [
+    { title: 'Product 1', id: 1 },
+    { title: 'Product 2', id: 2 }
+  ];
+})
+
+
 // s3-image-uploader controller
 .controller('UploadController', function ($scope){
   var imageUploader = new ImageUploader()
