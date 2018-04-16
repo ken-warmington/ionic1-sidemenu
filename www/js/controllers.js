@@ -91,9 +91,15 @@ angular.module('starter.controllers', ['ngResource'])
 	});
 	
 	
-	
-	// $scope.productlists = productsListResponse.productSummaryList; //used by productlists.html
-	
+	$scope.toggleJson = function() {
+		if ( $scope.showJson ) {
+			$scope.showJson=false;
+		}
+		else {
+			$scope.showJson=true;
+		}
+	}
+
 })
 
 

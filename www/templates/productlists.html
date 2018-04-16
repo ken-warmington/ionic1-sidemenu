@@ -1,11 +1,18 @@
 <ion-view view-title="Productlists">
   <ion-content>
-    <p> Search Results : {{searchResultsJson}} </p>
+    <p ng-show="showJson" > JSON response : {{searchResultsJson}} </p>
   
-    <ion-list>
-      <ion-item ng-repeat="product in productlists" href="#/app/playlists/{{playlist.id}}">
+    <ion-list ng-show="showSearchResults" >
+      <ion-item ng-repeat="product in searchResultsJson.productSummaryList" href="#/app/playlists/{{playlist.id}}">
         {{product.title}}
       </ion-item>
     </ion-list>
+    
+    <div class="list">
+      <label class="item">
+        <button class="button" ng-click="toggleJson()">Hide|Show JSON</button>
+      </label>
+    </div>
+    
   </ion-content>
 </ion-view>
