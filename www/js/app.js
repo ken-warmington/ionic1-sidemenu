@@ -65,11 +65,21 @@ angular.module('starter', ['ionic','ngResource' ,'starter.controllers'])
       views: {
         'menuContent': {
           templateUrl: 'templates/productlists.html',
-          controller: 'ProductlistsCtrl'
+          controller: 'ProductListsCtrl'
         }
       }
   })
-    
+  
+  .state('app.productdetail', {
+    url: '/productdetail/:productId',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/productdetail.html',
+        controller: 'ProductDetailCtrl'
+      }
+    }
+  })
+  
   .state('app.single', {
     url: '/playlists/:playlistId',
     views: {
@@ -79,6 +89,7 @@ angular.module('starter', ['ionic','ngResource' ,'starter.controllers'])
       }
     }
   });
+  
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/playlists');
 });

@@ -1,0 +1,31 @@
+<ion-view view-title="ProductDetail">
+  <ion-content>
+    <p ng-show="showJson" > JSON response : {{productResultsJson}} </p>    
+        
+    <div class="list" ng-show="showProductResults" >
+        <label class="item item-input">
+          <span class="input-label">Product Description</span>
+          <input type="text" value="{{productResultsJson.productDetails.description}}" disabled="disabled" >
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Average Rating</span>
+          <input type="text" value="{{productResultsJson.productDetails.averageRating}}" disabled="disabled" >
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Min Price</span>
+          <input type="text" value="${{productResultsJson.productDetails.minPrice}}" disabled="disabled" >
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Max Price</span>
+          <input type="text" value="${{productResultsJson.productDetails.maxPrice}}" disabled="disabled" >
+        </label>       
+    </div>
+    
+    <div class="list">
+      <label class="item">
+        <button class="button" ng-click="toggleJson()">Hide|Show JSON</button>
+      </label>
+    </div>
+        
+  </ion-content>
+</ion-view>

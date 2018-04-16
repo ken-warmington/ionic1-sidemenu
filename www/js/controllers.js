@@ -60,10 +60,10 @@ angular.module('starter.controllers', ['ngResource'])
   ];
 })
 **/
-.controller('ProductlistsCtrl', function($scope , $resource) {
+.controller('ProductListsCtrl', function($scope , $resource) {
 	var theUrl='https://dev.loopspot.com/mymarkit-restapi/product/list';
 	//var theUrl='http://localhost:8080/mymarkit-restapi/product/list';
-	console.log('ProductlistsCtrl before REST call, theUrl='+theUrl);
+	console.log('ProductListsCtrl before REST call, theUrl='+theUrl);
 	
 	$scope.productlists= '[]';
 	$scope.searchResultsJson = '';
@@ -78,19 +78,19 @@ angular.module('starter.controllers', ['ngResource'])
 
 	//execute query and log response
 	productsResourceQuery.query(function(productListResponse){ //function for success
-		console.log('ProductlistsCtrl after search --> success productListResponse='+productListResponse);
+		console.log('ProductListsCtrl after search --> success productListResponse='+productListResponse);
 		$scope.searchResultsJson = productListResponse;  //full JSON response
 		$scope.addresses=productListResponse; //array in JSON response
 		$scope.showSearchResults=true;
 		$scope.showJson=false;
 	}, function(err){ //function for errors - address not found
-		console.log('ProductlistsCtrl after search --> error err='+err);
+		console.log('ProductListsCtrl after search --> error err='+err);
 		$scope.searchResultsJson = '{ "error": "No data found matching the input" }';
 		$scope.showSearchResults=false;
 		$scope.showJson=true;
 	});
 	
-	
+	//hide OR show the raw JSON response from RESTAPI
 	$scope.toggleJson = function() {
 		if ( $scope.showJson ) {
 			$scope.showJson=false;
@@ -102,6 +102,47 @@ angular.module('starter.controllers', ['ngResource'])
 
 })
 
+.controller('ProductDetailCtrl', function($scope , $resource, $stateParams) {
+	var productId = $stateParams.productId;
+	console.log('ProductDetailCtrl productId='+productId);
+	var theUrl='https://dev.loopspot.com/mymarkit-restapi/product/'+productId;
+	//var theUrl='http://localhost:8080/mymarkit-restapi/product/list';
+	console.log('ProductDetailCtrl before REST call, theUrl='+theUrl);
+	
+	$scope.productResultsJson = '';
+	
+	var productsResourceQuery=$resource(theUrl, {}, {
+        query: {
+            method: 'GET',
+            params: {},
+            isArray: false
+        }
+    });
+
+	//execute query and log response
+	productsResourceQuery.query(function(productDetailsResponse){ //function for success
+		console.log('ProductDetailCtrl after search --> success productDetailsResponse='+productDetailsResponse);
+		$scope.productResultsJson = productDetailsResponse;  //full JSON response
+		$scope.showProductResults=true;
+		$scope.showJson=false;
+	}, function(err){ //function for errors - address not found
+		console.log('ProductDetailsCtrl after search --> error err='+err);
+		$scope.searchResultsJson = '{ "error": "No data found matching the input" }';
+		$scope.showProductResults=false;
+		$scope.showJson=true;
+	});
+	
+	//hide OR show the raw JSON response from RESTAPI
+	$scope.toggleJson = function() {
+		if ( $scope.showJson ) {
+			$scope.showJson=false;
+		}
+		else {
+			$scope.showJson=true;
+		}
+	}
+	
+})
 
 // s3-image-uploader controller
 .controller('UploadController', function ($scope){

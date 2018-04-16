@@ -3,7 +3,7 @@
     <p ng-show="showJson" > JSON response : {{searchResultsJson}} </p>
   
     <ion-list ng-show="showSearchResults" >
-      <ion-item ng-repeat="product in searchResultsJson.productSummaryList" href="#/app/playlists/{{playlist.id}}">
+      <ion-item ng-repeat="product in searchResultsJson.productSummaryList" href="#/app/productdetail/{{product.productId}}">
         {{product.title}}
       </ion-item>
     </ion-list>
