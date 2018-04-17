@@ -123,6 +123,8 @@ angular.module('starter.controllers', ['ngResource'])
 	productsResourceQuery.query(function(productDetailsResponse){ //function for success
 		console.log('ProductDetailCtrl after search --> success productDetailsResponse='+productDetailsResponse);
 		$scope.productResultsJson = productDetailsResponse;  //full JSON response
+		$scope.mainImageUrl=productDetailsResponse.productDetails.mainImageUrl;
+		
 		$scope.showProductResults=true;
 		$scope.showJson=false;
 	}, function(err){ //function for errors - address not found
@@ -141,6 +143,21 @@ angular.module('starter.controllers', ['ngResource'])
 			$scope.showJson=true;
 		}
 	}
+	
+	//set background image
+	$scope.setBackground = function() {
+		var bgimg='img/product-detail.jpg';
+		if ( $scope.mainImageUrl ) {
+			bgimg=$scope.mainImageUrl;
+			console.log('ProductDetailsCtrl setBackground bgimg='+bgimg);
+		}
+		
+		// var bgimg=$scope.mainImageUrl;
+		// console.log('ProductDetailsCtrl setBackground bgimg='+bgimg);
+	    return {
+	            'background-image':'url(' + bgimg + ')'
+	        }
+	} 
 	
 })
 

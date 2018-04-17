@@ -1,6 +1,18 @@
 <ion-view view-title="ProductDetail">
   <ion-content>
     <p ng-show="showJson" > JSON response : {{productResultsJson}} </p>    
+    
+    <!-- product image -->
+	<div class="section-inner section-inner__padding-top section-inner__padding-bottom grid-row">
+		<div class="grid-col l-6 xxl-7 product-gallery">  
+		  <div ng-show="showProductResults" class="product-detail-image-display aspect-ratio--1x1" >
+		  	<figure class="image-bg product-detail-image" 
+			    	ng-style="setBackground()" >
+				<img class="visuallyhidden" src='img/product-detail.jpg'>
+		  	</figure>
+		  </div>
+	    </div>
+    </div>
         
     <div class="list" ng-show="showProductResults" >
         <label class="item item-input">
