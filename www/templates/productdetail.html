@@ -2,37 +2,38 @@
   <ion-content>
     <p ng-show="showJson" > JSON response : {{productResultsJson}} </p>    
     
-    <!-- product image -->
-	<div class="section-inner section-inner__padding-top section-inner__padding-bottom grid-row">
+	<div ng-show="showProductResults" class="section-inner section-inner__padding-top section-inner__padding-bottom grid-row">
 		<div class="grid-col l-6 xxl-7 product-gallery">  
-		  <div ng-show="showProductResults" class="product-detail-image-display aspect-ratio--1x1" >
+		  <div class="product-detail-image-display aspect-ratio--1x1" >
 		  	<figure class="image-bg product-detail-image" 
 			    	ng-style="setBackground()" >
 				<img class="visuallyhidden" src='img/product-detail.jpg'>
 		  	</figure>
 		  </div>
 	    </div>
+	    
+	    <div class="grid-col l-6 xxl-5 product-details">
+		  <div class="page-headings product-detail-title">
+			<h1 class="page-heading">{{productResultsJson.productDetails.title}}</h1>
+			<h2 class="product-rating-heading">{{productResultsJson.productDetails.averageRating}}</h2>
+			<div ng-bind-html="productResultsJson.productDetails.description" class="product-blurb"></div>
+			
+			<div class="product-pricing grid-row grid-row__center">
+				<div class="grid-col m-6"><h3 ng-if="minPrice != maxPrice" class="product-price">{{currencyCode}} {{minPrice}}-{{maxPrice}}</h3>
+				    <h3 ng-if="minPrice == maxPrice" class="product-price">{{currencyCode}} {{minPrice}}</h3>
+				</div>
+	  			
+	  			<!-- GRAVITATE buy button -->
+	  			<div ng-show="bShowBuyButton" class="grid-col m-6 product-buy">
+	  				<a class="button" ng-click="loadShopifyBuyButton()" >Buy now</a>
+	  			</div>
+				<!-- SHOPIFY CART in own div -->
+				<div ng-show="bShowCart" id='product-component-ad3dc269427'></div>
+			</div>
+		  </div>
+	    </div>
     </div>
         
-    <div class="list" ng-show="showProductResults" >
-        <label class="item item-input">
-          <span class="input-label">Product Description</span>
-          <input type="text" value="{{productResultsJson.productDetails.description}}" disabled="disabled" >
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Average Rating</span>
-          <input type="text" value="{{productResultsJson.productDetails.averageRating}}" disabled="disabled" >
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Min Price</span>
-          <input type="text" value="${{productResultsJson.productDetails.minPrice}}" disabled="disabled" >
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Max Price</span>
-          <input type="text" value="${{productResultsJson.productDetails.maxPrice}}" disabled="disabled" >
-        </label>       
-    </div>
-    
     <div class="list">
       <label class="item">
         <button class="button" ng-click="toggleJson()">Hide|Show JSON</button>

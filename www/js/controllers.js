@@ -124,6 +124,13 @@ angular.module('starter.controllers', ['ngResource'])
 		console.log('ProductDetailCtrl after search --> success productDetailsResponse='+productDetailsResponse);
 		$scope.productResultsJson = productDetailsResponse;  //full JSON response
 		$scope.mainImageUrl=productDetailsResponse.productDetails.mainImageUrl;
+		$scope.currencyCode=productDetailsResponse.productDetails.buyNowParameters.currencyCode;
+		$scope.minPrice=productDetailsResponse.productDetails.minPrice;
+		$scope.maxPrice=productDetailsResponse.productDetails.maxPrice;
+		
+		//buy buttons
+		$scope.bShowBuyButton=false;
+		$scope.bShowCart=false;
 		
 		$scope.showProductResults=true;
 		$scope.showJson=false;
@@ -152,11 +159,9 @@ angular.module('starter.controllers', ['ngResource'])
 			console.log('ProductDetailsCtrl setBackground bgimg='+bgimg);
 		}
 		
-		// var bgimg=$scope.mainImageUrl;
-		// console.log('ProductDetailsCtrl setBackground bgimg='+bgimg);
 	    return {
 	            'background-image':'url(' + bgimg + ')'
-	        }
+	    }
 	} 
 	
 })
