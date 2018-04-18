@@ -41,16 +41,6 @@ angular.module('starter.controllers', ['ngResource'])
   };
 })
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
-})
 
 /**
 .controller('ProductlistsCtrl', function($scope) {
@@ -61,7 +51,8 @@ angular.module('starter.controllers', ['ngResource'])
 })
 **/
 .controller('ProductListsCtrl', function($scope , $resource) {
-	var theUrl='https://dev.loopspot.com/mymarkit-restapi/product/list';
+	var theUrl='https://test.loopspot.com/mymarkit-restapi/product/list';
+	//var theUrl='https://dev.loopspot.com/mymarkit-restapi/product/list';
 	//var theUrl='http://localhost:8080/mymarkit-restapi/product/list';
 	console.log('ProductListsCtrl before REST call, theUrl='+theUrl);
 	
@@ -100,13 +91,28 @@ angular.module('starter.controllers', ['ngResource'])
 		}
 	}
 
+	//set background image
+	$scope.setBackground = function(product) {
+		// product.mainImageUrl
+		var bgimg='img/product-detail.jpg';
+		if ( product && product.mainImageUrl ) {
+			bgimg=product.mainImageUrl;
+			console.log('ProductListsCtrl setBackground bgimg='+bgimg);
+		}
+		
+	    return {
+	            'background-image':'url(' + bgimg + ')'
+	    }
+	} 
+
 })
 
 .controller('ProductDetailCtrl', function($scope , $resource, $stateParams) {
 	var productId = $stateParams.productId;
 	console.log('ProductDetailCtrl productId='+productId);
 	
-	var theUrl='https://dev.loopspot.com/mymarkit-restapi/product/'+productId;
+	var theUrl='https://test.loopspot.com/mymarkit-restapi/product/'+productId;
+	//var theUrl='https://dev.loopspot.com/mymarkit-restapi/product/'+productId;
 	//var theUrl='http://localhost:8080/mymarkit-restapi/product/list';
 	console.log('ProductDetailCtrl before REST call, theUrl='+theUrl);
 	
@@ -199,42 +205,6 @@ angular.module('starter.controllers', ['ngResource'])
 	
 })
 
-// s3-image-uploader controller
-.controller('UploadController', function ($scope){
-  var imageUploader = new ImageUploader()
-  $scope.file = {}
-  $scope.upload = function() {
-    imageUploader.push($scope.file, function(data){
-      console.log('File uploaded Successfully', $scope.file, data)
-      $scope.uploadUri = data.url
-      $scope.$digest()
-    })
-  }
-})
-
-// directive for file - used with s3-image-uploader
-.directive('file', function() {
-  return {
-    restrict: 'AE',
-    scope: {
-      file: '@'
-    },
-    link: function(scope, el, attrs){
-      el.bind('change', function(event){
-        var files = event.target.files
-        var file = files[0]
-        if(file.size>0){
-          scope.file = file
-          scope.$parent.file = file
-        } else {
-          scope.file = {}
-          scope.$parent.file = {} 
-        }
-        scope.$apply()
-      })
-    }
-  }
-})
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 });

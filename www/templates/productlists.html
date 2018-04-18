@@ -1,12 +1,34 @@
-<ion-view view-title="Productlists">
+<ion-view view-title="Products">
   <ion-content>
     <p ng-show="showJson" > JSON response : {{searchResultsJson}} </p>
   
-    <ion-list ng-show="showSearchResults" >
-      <ion-item ng-repeat="product in searchResultsJson.productSummaryList" href="#/app/productdetail/{{product.productId}}">
-        {{product.title}}
-      </ion-item>
-    </ion-list>
+	<div class="section-inner section-inner__padding-top section-inner__padding-bottom">  
+	  <ul ng-show="showSearchResults" class="nav product-card-list grid-row grid-row__align-left">
+		<li ng-repeat="product in searchResultsJson.productSummaryList" class="product-card-item grid-col s-6 l-4 xl-3">
+		  <a class="product-card-link aspect-ratio--1x1" href="#/app/productdetail/{{product.productId}}" >
+			<figure class="image-bg product-detail-image" 
+			    	ng-style="setBackground({{product}})" >
+				<img class="visuallyhidden" src='img/product-detail.jpg'>
+		  	</figure>
+			<div class="product-card-influencer-review">
+				<div class="product-card-influencer-avatar">
+				</div>
+				<div class="product-card-influencer-name"></div>
+			</div>
+			<div class="product-card-review-aggregate">
+				{{product.averageRating}}
+			</div>
+			<div class="product-card-hover">
+					<!--<button class="product-card-add-favourite icon"></button-->
+				<div *ngIf="product.minPrice != product.maxPrice" class="product-card-price">{{product.currencyCode}} {{product.minPrice}}-{{product.maxPrice}}</div>
+				<div *ngIf="product.minPrice == product.maxPrice" class="product-card-price">{{product.currencyCode}} {{product.minPrice}}</div>
+				<div class="product-card-name">{{product.title}}</div>
+			</div>
+		  </a>
+	    </li>    
+	  </ul>
+	</div>
+
     
     <div class="list">
       <label class="item">
