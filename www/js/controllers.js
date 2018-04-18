@@ -105,6 +105,7 @@ angular.module('starter.controllers', ['ngResource'])
 .controller('ProductDetailCtrl', function($scope , $resource, $stateParams) {
 	var productId = $stateParams.productId;
 	console.log('ProductDetailCtrl productId='+productId);
+	
 	var theUrl='https://dev.loopspot.com/mymarkit-restapi/product/'+productId;
 	//var theUrl='http://localhost:8080/mymarkit-restapi/product/list';
 	console.log('ProductDetailCtrl before REST call, theUrl='+theUrl);
@@ -124,12 +125,20 @@ angular.module('starter.controllers', ['ngResource'])
 		console.log('ProductDetailCtrl after search --> success productDetailsResponse='+productDetailsResponse);
 		$scope.productResultsJson = productDetailsResponse;  //full JSON response
 		$scope.mainImageUrl=productDetailsResponse.productDetails.mainImageUrl;
-		$scope.currencyCode=productDetailsResponse.productDetails.buyNowParameters.currencyCode;
+		
 		$scope.minPrice=productDetailsResponse.productDetails.minPrice;
 		$scope.maxPrice=productDetailsResponse.productDetails.maxPrice;
+
+        //fields for shopify Cart. Shopify Product Id example - 12966014091 for our Toy Lion
+		$scope.productId=productDetailsResponse.productDetails.buyNowParameters.productId;
+		$scope.domain=productDetailsResponse.productDetails.buyNowParameters.domain;
+		$scope.apiKey=productDetailsResponse.productDetails.buyNowParameters.apiKey;
+		$scope.appId=productDetailsResponse.productDetails.buyNowParameters.appId;
+		$scope.discountCode=productDetailsResponse.productDetails.buyNowParameters.discountCode;
+        $scope.currencyCode=productDetailsResponse.productDetails.buyNowParameters.currencyCode;
 		
 		//buy buttons
-		$scope.bShowBuyButton=false;
+		$scope.bShowBuyButton=true;
 		$scope.bShowCart=false;
 		
 		$scope.showProductResults=true;
@@ -140,6 +149,30 @@ angular.module('starter.controllers', ['ngResource'])
 		$scope.showProductResults=false;
 		$scope.showJson=true;
 	});
+	
+	// load shopify buy button
+	$scope.loadShopifyBuyButton = function() {
+		var shopifyProductId=$scope.productId;
+		var shopifyDomain=$scope.domain;
+		var shopifyApiKey=$scope.apiKey;
+		var appId=$scope.appId;
+		var discountCode=$scope.discountCode;
+		var currencyCode=$scope.currencyCode;
+		
+		console.log('ProductDetailsCtrl loadShopifyBuyButton() shopifyProductId='+shopifyProductId);
+		console.log('ProductDetailsCtrl loadShopifyBuyButton() shopifyDomain='+shopifyDomain);
+		console.log('ProductDetailsCtrl loadShopifyBuyButton() shopifyApiKey='+shopifyApiKey);
+		console.log('ProductDetailsCtrl loadShopifyBuyButton() appId='+appId);
+		console.log('ProductDetailsCtrl loadShopifyBuyButton() discountCode='+discountCode);
+		console.log('ProductDetailsCtrl loadShopifyBuyButton() currencyCode='+currencyCode);
+	
+		$scope.bShowBuyButton=false;
+		$scope.bShowCart=true;
+		
+		// see js/myshopify.js
+		// echoProductId(shopifyProductId);
+		loadMyShopify(shopifyProductId, shopifyDomain, shopifyApiKey, appId, discountCode, currencyCode);
+	}
 	
 	//hide OR show the raw JSON response from RESTAPI
 	$scope.toggleJson = function() {
